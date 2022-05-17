@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gamification", "gamification\gamification.csproj", "{5830E59E-5DCC-4F15-8AEB-A3387C324E31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamification", "Gamification.csproj", "{E02D80E9-6FC9-4067-88CC-F4C661C62171}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5830E59E-5DCC-4F15-8AEB-A3387C324E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5830E59E-5DCC-4F15-8AEB-A3387C324E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5830E59E-5DCC-4F15-8AEB-A3387C324E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5830E59E-5DCC-4F15-8AEB-A3387C324E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E02D80E9-6FC9-4067-88CC-F4C661C62171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E02D80E9-6FC9-4067-88CC-F4C661C62171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E02D80E9-6FC9-4067-88CC-F4C661C62171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E02D80E9-6FC9-4067-88CC-F4C661C62171}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F74B3301-9DC6-4CF7-A362-D41B8FD81AE0}
+		SolutionGuid = {F508FFBE-D012-49E4-88DE-F4B78C539277}
 	EndGlobalSection
 EndGlobal
