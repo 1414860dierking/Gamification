@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gamification
+namespace gamification
 {
     public class Program
     {

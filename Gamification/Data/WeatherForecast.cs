@@ -1,6 +1,6 @@
 using System;
 
-namespace Gamification.Data
+namespace gamification.Data
 {
     public class WeatherForecast
     {

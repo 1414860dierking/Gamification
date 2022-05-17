@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gamification.Data
+namespace gamification.Data
 {
     public class WeatherForecastService
     {
