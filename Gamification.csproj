@@ -14,6 +14,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Microsoft.AspNetCore.Authorization" />
+    <None Remove="Auth0.Core" />
+    <None Remove="Auth0.AspNetCore.Authentication" />
+  </ItemGroup>
 </Project>
