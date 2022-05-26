@@ -59,7 +59,7 @@ jobs:
   
   
   run-linters: #####zelf toegevoegd
-    name: Run linters
+    name: testing met linters
     runs-on: ubuntu-latest
     steps: 
       - name: Check out Git repository
@@ -70,10 +70,19 @@ jobs:
         with:
           dotnet-version: "6.0.x"
 
-      - name: Run linters
+      - name: Run linters test
         uses: wearerequired/lint-action@v2
         with:
           dotnet_format: true
+          
+      - name: Run auto fix
+        uses: wearerequired/lint-action@v2
+        with:
+          auto_fix: true
+          black: true
+          black_auto_fix: true
+          flake8: true
+          flake8_auto_fix: false
   
   build:
     runs-on: ubuntu-latest
