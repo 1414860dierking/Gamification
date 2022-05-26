@@ -74,7 +74,6 @@ jobs:
       - name: Run linters test en autofix
         uses: wearerequired/lint-action@v2
         with:
-          dotnet_format: true
           auto_fix: true
           
 
