@@ -60,7 +60,7 @@ jobs:
   
   run-linters: #####zelf toegevoegd
     name: testing met linters
-    permissions: read-all|write-all
+    permissions: read-all
     runs-on: ubuntu-latest
     steps: 
       - name: Check out Git repository
