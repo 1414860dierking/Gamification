@@ -58,6 +58,23 @@ jobs:
         run: dotnet test --no-build --verbosity normal             #zelf toegevoegd
   
   
+  run-linters: #####zelf toegevoegd
+    name: Run linters
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          dotnet_format: true
+  
   build:
     runs-on: ubuntu-latest
 
