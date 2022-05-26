@@ -57,7 +57,7 @@ jobs:
         run: dotnet restore                          #zelf toegevoegd
         
       - name: Test                                                    #zelf toegevoegd
-        run: dotnet test --no-restore --verbosity normal             #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal             #zelf toegevoegd
         
       - name: Build with dotnet
         run: dotnet build --configuration Release --no-restore         #no restore zelf toegevoegd
