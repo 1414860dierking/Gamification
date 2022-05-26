@@ -73,8 +73,6 @@ jobs:
 
       - name: Run linters test en autofix
         uses: wearerequired/lint-action@v2
-        with:
-          auto_fix: true
           
 
 
