@@ -55,12 +55,12 @@ jobs:
 
       - name: Install dependencies                         #zelf toegevoegd
         run: dotnet restore                          #zelf toegevoegd
-      
-      - name: Build with dotnet
-        run: dotnet build --configuration Release --no-restore         #no restore zelf toegevoegd
-
+        
       - name: Test                                                    #zelf toegevoegd
         run: dotnet test --no-restore --verbosity normal             #zelf toegevoegd
+        
+      - name: Build with dotnet
+        run: dotnet build --configuration Release --no-restore         #no restore zelf toegevoegd
       
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
