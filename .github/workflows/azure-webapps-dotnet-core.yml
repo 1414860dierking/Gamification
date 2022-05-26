@@ -27,7 +27,7 @@ env:
 on:
   push:
     branches:
-      - main
+      - test
   workflow_dispatch:
 
 permissions:
