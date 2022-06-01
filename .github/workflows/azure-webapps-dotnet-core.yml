@@ -58,7 +58,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal             #zelf toegevoegd
   
   
-  run-linters: #####zelf toegevoegd
+  run-linters: #####zelf toegevoegd linters
     name: testing met linters
     permissions: write-all
     runs-on: ubuntu-latest
