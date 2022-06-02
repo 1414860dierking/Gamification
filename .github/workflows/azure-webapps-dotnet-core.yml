@@ -17,23 +17,66 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy ASP.Net Core app to an Azure Web App
+name: Build and deploy ASP.Net Core app to an Azure Web App TEST manon
 
 env:
-  AZURE_WEBAPP_NAME: B2C6GamificationTest    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 on:
   push:
     branches:
-      - main
+      - test
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
+  test: #### zelf toegevoegd
+    name: test application
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: Set up dependency caching for faster builds
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+            
+      - name: Test                                                    #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal             #zelf toegevoegd
+  
+  
+  run-linters: #####zelf toegevoegd linters
+    name: testing met linters
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Run linters test en autofix
+        uses: wearerequired/lint-action@v2
+          
+
+
+  
   build:
     runs-on: ubuntu-latest
 
@@ -53,9 +96,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Install dependencies                         #zelf toegevoegd
+        run: dotnet restore                          #zelf toegevoegd
+        
       - name: Build with dotnet
-        run: dotnet build --configuration Release
-
+        run: dotnet build --configuration Release --no-restore         #no restore zelf toegevoegd
+      
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
@@ -85,5 +131,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
