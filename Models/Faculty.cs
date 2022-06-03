@@ -1,12 +1,9 @@
-﻿namespace Gamification.Pages.Models
+﻿namespace Gamification.Models
 {
-    public class Faculties
+    public class Faculty
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-
-      
 
     }
 }
