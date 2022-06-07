@@ -4,6 +4,12 @@ namespace Gamification.UnitTests
 {
     public class UnitTestFirst
     {
+        [SetUp]
+        public void Setup()
+        {
+
+        }
+
         [Test]
         public void Test1()
         {
