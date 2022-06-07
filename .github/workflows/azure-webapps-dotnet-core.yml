@@ -120,6 +120,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
+    if: github.ref == 'refs/heads/production' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit production en develop
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
