@@ -37,7 +37,6 @@ jobs:
     
     steps:
       - name: check branch name
-        if: ${{ env.GITHUB_REF == 'refs/heads/test'}}
         run: |
           echo "branch name: $GITHUB_REF"
         env:
