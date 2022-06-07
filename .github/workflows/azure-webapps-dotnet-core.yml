@@ -17,12 +17,9 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy ASP.Net Core app to an Azure Web App TEST manon
+name: build and deploy from test branch
 
-env:
-  AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+
 
 on:
   push:
@@ -34,6 +31,20 @@ permissions:
   contents: read
 
 jobs:
+  omgeving_ophalen:
+    name: get env
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: check branch name
+        run: |
+          echo "branch name: $GITHUB_REF"
+        env:
+          AZURE_WEBAPP_NAME: B2C6Gamification-develop
+          AZURE_WEBAPP_PACKAGE_PATH: '.'
+          DOTNET_VERSION: '6.0'
+  
+  
   test: #### zelf toegevoegd
     name: test application
     runs-on: ubuntu-latest
