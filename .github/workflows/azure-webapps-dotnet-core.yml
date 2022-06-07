@@ -19,7 +19,7 @@
 
 name: build and deploy from test branch
 
-variables:
+defaults:
   if: ${{ github.ref }} = 'refs/heads/test' 
     omgevingnaam == B2C6Gamification-develop
   else: 
