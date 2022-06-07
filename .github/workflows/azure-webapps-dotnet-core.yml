@@ -19,7 +19,16 @@
 
 name: build and deploy from test branch
 
+variables:
+  if: ${{ github.ref }} = 'refs/heads/test' 
+    omgevingnaam == B2C6Gamification-develop
+  else: 
+    omgevingnaam == B2C6Gamification-production
 
+env:
+  AZURE_WEBAPP_NAME: $(omgevingnaam)    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 on:
   push:
@@ -39,10 +48,6 @@ jobs:
       - name: check branch name
         run: |
           echo "branch name: $GITHUB_REF"
-        env:
-          AZURE_WEBAPP_NAME: B2C6Gamification-develop
-          AZURE_WEBAPP_PACKAGE_PATH: '.'
-          DOTNET_VERSION: '6.0'
   
   
   test: #### zelf toegevoegd
