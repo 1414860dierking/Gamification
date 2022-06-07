@@ -2,6 +2,7 @@
 
 namespace Gamification.UnitTests
 {
+    [TestFixture]
     public class UnitTestFirst
     {
         [SetUp]
