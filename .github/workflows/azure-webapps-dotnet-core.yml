@@ -70,7 +70,7 @@ jobs:
       - name: Unit test report
         uses: zyborg/dotnet-tests-report@v1
         with:
-          report_name: sample-test.results.md
+          report_name: test.results.md
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
