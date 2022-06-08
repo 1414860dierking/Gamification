@@ -20,11 +20,10 @@
 name: build and deploy from test branch
 
 
-if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit production en develop
-  env:
-    AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
-    AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-    DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+env:
+  AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 
 on:
@@ -37,27 +36,6 @@ permissions:
   contents: read
 
 jobs:
- # omgeving_ophalen:
- #   name: get env
-#    runs-on: ubuntu-latest
-    
-  #  steps:
-   #   - name: check branch name en zet env variable
-    #    run: |
-     #     echo "branch name: $GITHUB_REF"
-      #    if [ ${{ github.ref }} != 'refs/heads/production' ]; then
-       #     echo "Is production branch"
-        #    env:
-         #     AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
-          #    AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-           #   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
-      #    else echo "Is test/develop branch"
-       #       env:
-        #      AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
-         #     AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-          #    DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
-  
-  
   test: #### zelf toegevoegd
     name: test application
     runs-on: ubuntu-latest
@@ -144,7 +122,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    #if: github.ref == 'refs/heads/production' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit production en develop
+    if: github.ref == 'refs/heads/test' ###mag alleen runnen vanuit test
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -155,6 +133,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: 'B2C6Gamification-develop'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
