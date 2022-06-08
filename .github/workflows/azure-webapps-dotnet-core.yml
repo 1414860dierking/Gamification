@@ -64,6 +64,7 @@ jobs:
           report_name: test.results.md
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          failTaskOnFailedTests: false
           #fail_build_on_failed_tests: true
         
 #   unit-test:
