@@ -56,7 +56,7 @@ jobs:
             ${{ runner.os }}-nuget-
             
       - name: Test                                                    #zelf toegevoegd
-        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" || false            #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal # --logger "trx;LogFileName=test-results.trx" || false            #zelf toegevoegd
       
 #       - name: Test Report
 #         uses: dorny/test-reporter@v1
@@ -67,18 +67,18 @@ jobs:
 #           reporter: dotnet-trx
 #           fail-on-error: true
       
-      - name: use this action, test solution dir
+      - name: Unit test report
         uses: zyborg/dotnet-tests-report@v1
         with:
           report_name: sample-test.results.md
-          report_title: My Project Tests
+          report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: "*.xml"
+#       - name: Publish Test Results
+#         uses: EnricoMi/publish-unit-test-result-action@v1
+#         if: always()
+#         with:
+#           files: "*.xml"
         
   
   
