@@ -73,7 +73,7 @@ jobs:
           report_name: test.results.md
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          no_build: true
+          no_build: false
           
 #       - name: Publish Test Results
 #         uses: EnricoMi/publish-unit-test-result-action@v1
