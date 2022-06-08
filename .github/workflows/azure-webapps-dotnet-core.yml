@@ -64,7 +64,10 @@ jobs:
           report_name: test.results.md
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          fail_build_on_failed_tests: true
+          #fail_build_on_failed_tests: true
+        if: ${{ failed_count > 0 }}
+          exit 1;
+        
 #   unit-test:
 #     name: Unit test
 #     permissions: write-all
