@@ -17,7 +17,7 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy ASP.Net Core app to an Azure Web App TEST manon
+name: Build and deploy ASP.Net Core app to an Azure Web App UnitTesting
 
 env:
   AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
@@ -55,18 +55,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
             
-      - name: Test                                                    #zelf toegevoegd
-        run: dotnet test --no-build --verbosity normal # --logger "trx;LogFileName=test-results.trx" || false            #zelf toegevoegd
-      
-#       - name: Test Report
-#         uses: dorny/test-reporter@v1
-#         if: always()
-#         with:
-#           name: DotNET Tests
-#           path: "test-results.trx"                            
-#           reporter: dotnet-trx
-#           fail-on-error: true
-      
+      - name: Test                                                #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
+            
       - name: Unit test report
         uses: zyborg/dotnet-tests-report@v1
         with:
@@ -74,15 +65,7 @@ jobs:
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_build_on_failed_tests: true
-          
-#       - name: Publish Test Results
-#         uses: EnricoMi/publish-unit-test-result-action@v1
-#         if: always()
-#         with:
-#           files: "*.xml"
-        
-  
-  
+               
   run-linters: #####zelf toegevoegd linters
     name: testing met linters
     permissions: write-all
