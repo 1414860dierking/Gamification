@@ -56,14 +56,14 @@ jobs:
             ${{ runner.os }}-nuget-
             
       - name: Test                                                    #zelf toegevoegd
-        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" || true            #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" || false            #zelf toegevoegd
       
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: DotNET Tests
-          path: "**/test-results.trx"                            
+          path: "test-results.trx"                            
           reporter: dotnet-trx
           fail-on-error: true
       
