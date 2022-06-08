@@ -68,8 +68,7 @@ jobs:
           
       - name: Test echo
         run: 
-          echo "%Counters_passed%"
-          echo %Counters_passed%
+          echo Counters_passed
         
 #   unit-test:
 #     name: Unit test
