@@ -21,9 +21,9 @@ name: build and deploy from test branch
 
 
 env:
-  AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+  AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
 
 
 on:
@@ -113,7 +113,7 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy-development:
     permissions:
       contents: none
     runs-on: ubuntu-latest
@@ -122,7 +122,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    if: github.ref == 'refs/heads/test' ###mag alleen runnen vanuit test
+    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/development' ###mag alleen runnen vanuit test
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -133,6 +133,30 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'B2C6Gamification-develop'
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+  deploy-production:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    if: github.ref == 'refs/heads/production' ###mag alleen runnen vanuit test
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
