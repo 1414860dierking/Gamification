@@ -73,7 +73,7 @@ jobs:
           report_name: test.results.md
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          no-build: true
+          no_build: true
           
 #       - name: Publish Test Results
 #         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -145,6 +145,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
+    if: github.ref == 'refs/heads/test' #enkel deploy vanuit test branch
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
