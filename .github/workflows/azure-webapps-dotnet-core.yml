@@ -70,8 +70,8 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Test                                                #zelf toegevoegd
-        run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
+#       - name: Test                                                #zelf toegevoegd
+#         run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
         
       - name: Unit test report
         uses: zyborg/dotnet-tests-report@v1
