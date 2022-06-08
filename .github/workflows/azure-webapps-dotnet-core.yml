@@ -55,24 +55,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
             
-#       - name: Test                                                #zelf toegevoegd
-#         run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
+      - name: Test                                                #zelf toegevoegd
+        run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
             
-#       - name: Unit test report
-#         uses: zyborg/dotnet-tests-report@v1
-#         with:
-#           report_name: test.results.md
-#           report_title: Unit tests
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           fail_build_on_failed_tests: true
-  unit-test:
-    name: Unit test
-    permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-#       - name: Test                                                #zelf toegevoegd
-#         run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
-        
       - name: Unit test report
         uses: zyborg/dotnet-tests-report@v1
         with:
@@ -80,6 +65,21 @@ jobs:
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_build_on_failed_tests: true
+#   unit-test:
+#     name: Unit test
+#     permissions: write-all
+#     runs-on: ubuntu-latest
+#     steps:
+# #       - name: Test                                                #zelf toegevoegd
+# #         run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
+        
+#       - name: Unit test report
+#         uses: zyborg/dotnet-tests-report@v1
+#         with:
+#           report_name: test.results.md
+#           report_title: Unit tests
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           fail_build_on_failed_tests: true
     
                
   run-linters: #####zelf toegevoegd linters
@@ -103,7 +103,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    needs: [test, unit-test, run-linters]
+    needs: [test, run-linters]
 
     steps:
       - uses: actions/checkout@v3
