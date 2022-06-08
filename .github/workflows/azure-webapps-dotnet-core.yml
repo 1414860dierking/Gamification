@@ -60,7 +60,7 @@ jobs:
       - name: use this action, test solution dir
         uses: zyborg/dotnet-tests-report@v1
         with:
-          report_name: my_project_tests
+          report_name: sample-test.results.md
           report_title: My Project Tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
   
