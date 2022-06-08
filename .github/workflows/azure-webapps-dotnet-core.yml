@@ -36,7 +36,7 @@ permissions:
 jobs:
   test: #### zelf toegevoegd
     name: Test application
-    #permissions: write-all
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
