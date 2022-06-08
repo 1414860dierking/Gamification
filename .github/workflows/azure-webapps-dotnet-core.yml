@@ -20,7 +20,11 @@
 name: build and deploy from test branch
 
 
-
+if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit production en develop
+  env:
+    AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
+    AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+    DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 
 on:
@@ -33,25 +37,25 @@ permissions:
   contents: read
 
 jobs:
-  omgeving_ophalen:
-    name: get env
-    runs-on: ubuntu-latest
+ # omgeving_ophalen:
+ #   name: get env
+#    runs-on: ubuntu-latest
     
-    steps:
-      - name: check branch name en zet env variable
-        run: |
-          echo "branch name: $GITHUB_REF"
-          if [ ${{ github.ref }} != 'refs/heads/production' ]; then
-            echo "Is production branch"
-            env:
-              AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
-              AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-              DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
-          else echo "Is test/develop branch"
-              env:
-              AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
-              AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-              DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+  #  steps:
+   #   - name: check branch name en zet env variable
+    #    run: |
+     #     echo "branch name: $GITHUB_REF"
+      #    if [ ${{ github.ref }} != 'refs/heads/production' ]; then
+       #     echo "Is production branch"
+        #    env:
+         #     AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
+          #    AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+           #   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+      #    else echo "Is test/develop branch"
+       #       env:
+        #      AZURE_WEBAPP_NAME: B2C6Gamification-develop   # set this to the name of your Azure Web App
+         #     AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+          #    DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
   
   
   test: #### zelf toegevoegd
