@@ -40,9 +40,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: check branch name
+      - name: check branch name en zet env variable
         run: |
           echo "branch name: $GITHUB_REF"
+          if [ ${{ github.ref }} != 'refs/heads/production' ]; then
+            echo "Is production branch"
+            echo "AZURE_WEBAPP_NAME=B2C6Gamification-develop" >> $GITHUB_ENV
+          else echo "Is test/develop branch"
+            echo "AZURE_WEBAPP_NAME=B2C6Gamification-develop" >> $GITHUB_ENV
   
   
   test: #### zelf toegevoegd
