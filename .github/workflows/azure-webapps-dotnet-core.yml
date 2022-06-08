@@ -36,7 +36,7 @@ permissions:
 jobs:
   test: #### zelf toegevoegd
     name: test application
-    permissions: write-all
+    #permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
@@ -65,10 +65,6 @@ jobs:
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           fail_build_on_failed_tests: true
-       
-#       - name: cancelling
-#         uses: andymckay/cancel-action@0.2
-#         if: {{ fail_build_on_failed_tests }}
                
   run-linters: #####zelf toegevoegd linters
     name: testing met linters
