@@ -36,9 +36,8 @@
     {
        @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
 
- 
 
-        <button style="width:1230px;height:30px; text-align:left; margin:3px" @onclick="@( _ => GoToQuestions(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
+        <button class="btn btn-secondary" style="width:1230px;text-align:left; margin:5px" @onclick="@( _ => GoToQuestions(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
         
         <br /> 
 
