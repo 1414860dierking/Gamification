@@ -1,0 +1,42 @@
+﻿@page "/PlayQuiz"
+
+
+
+@if (QuizService.Quiz != null)
+{
+        <h3>Quiz naam: @QuizService.Quiz.Name</h3> 
+
+        
+
+        <H5>Omschrijving quiz: <br /> @QuizService.Quiz.Description</H5>
+}
+
+ <br />
+
+
+
+@*<h4>Vragen: </h4>*@
+
+
+
+
+@*
+@if (ListOfQuestions != null)
+{
+    foreach (Gamification.Models.Question questions in ListOfQuestions)
+    {
+        <a >@questions.Title @questions.Description</a>
+        
+        <br />
+    }
+}*@
+
+
+
+
+
+
+@code {
+
+
+}

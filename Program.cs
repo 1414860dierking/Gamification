@@ -1,4 +1,5 @@
 ﻿using Gamification.Data;
+using Gamification.Services;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,7 +14,8 @@ builder.Services
     });
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddSingleton<QuizService>();
 
 var app = builder.Build();
 
