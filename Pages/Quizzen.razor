@@ -1,24 +1,45 @@
 ﻿@page "/Quizzen"
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
 <h3>Quizzen</h3>
 
+<label for="Subjects">Kies een faculteit:</label>
+
+<select name="Faculty" id="Faculty.Id" @onchange="@OnSelectFaculty">
+    <option value="" disabled selected hidden>Kies faculteit...</option>
+    @foreach (Gamification.Models.Faculty faculty in ListOfFaculties)
+    {
+        <option value="@faculty.Id">@faculty.Name</option>
+    }
+</select>
+
+<label for="Subjects">Kies een vak:</label>
+
+<select name="Subjects" id="Subject.Id" @onchange="@OnSelectSubject">
+    <option value="" disabled selected hidden>Kies vak...</option>
+    @if (ListOfSubjects != null)
+    {
+        foreach (Gamification.Models.Subject subject in ListOfSubjects)
+        {
+            <option value="@subject.Id">@subject.Name</option>
+        }
+    }
+</select>
+</div>
+
+<br />
 
 
-     <label for="Subjects">Kies een vak:</label>
-
-<select name="Subjects" id="Subject.Id">
-  <option value="B2F3">B2F3</option>
-  <option value="B2F4">B2F4</option>
-  <option value="B2C6">B2C6</option>
-  <option value="B2C7">B2C7</option>
-  @*dit moet op de een of andere manier gekoppeld worden aan de klasse die voor de vakken gemaakt wordt zodat het niet hardcoded erin komt te staan maar dynamisch aan de hand van de database*@
-  
-
-</select> 
+@if (ListOfQuizzes != null)
+{
+    foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
+    {
+       @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
 
 
-@code {
+        <button class="btn btn-secondary" style="width:1230px;text-align:left; margin:5px" @onclick="@( _ => GoToQuestions(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
+        
+        <br /> 
 
-    
-
-
+    }
 }

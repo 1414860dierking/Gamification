@@ -13,9 +13,6 @@ namespace Gamification
             DatabaseDefaultConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
         }
 
-       
-
-
     }
 }
 
