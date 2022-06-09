@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Data.SqlClient;
 using Gamification.Models;
+using Gamification.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace Gamification.Pages
@@ -20,6 +21,10 @@ namespace Gamification.Pages
 		private PlayQuiz PlayQuiz { get; set; }
 
 		SqlConnection sqlConnection;
+
+		[Inject] QuizService QuizService { get; set; }
+
+		[Inject] NavigationManager NavigationManager { get; set; }
 
 
 		public Quizzen()
@@ -165,7 +170,13 @@ namespace Gamification.Pages
 			}
 		}
 
-		
+		public async void GoToQuestions(Quiz quiz)
+        {
+			await QuizService.Set(quiz);
+            NavigationManager.NavigateTo("PlayQuiz");
+        }
+
+
 	}
 }
 

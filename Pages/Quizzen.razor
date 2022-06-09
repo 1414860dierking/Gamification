@@ -1,7 +1,7 @@
 ﻿@page "/Quizzen"
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
 <h3>Quizzen</h3>
-
-
 
 <label for="Subjects">Kies een faculteit:</label>
 
@@ -12,8 +12,6 @@
         <option value="@faculty.Id">@faculty.Name</option>
     }
 </select>
-
-<br />
 
 <label for="Subjects">Kies een vak:</label>
 
@@ -27,16 +25,22 @@
         }
     }
 </select>
+</div>
 
 <br />
-<br />
+
 
 @if (ListOfQuizzes != null)
 {
     foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
     {
-        <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz.Id) )">@quiz.Id  @quiz.Name  @quiz.Description</a>
+       @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
+
+ 
+
+        <button style="width:1230px;height:30px; text-align:left; margin:3px" @onclick="@( _ => GoToQuestions(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
         
-        <br />
+        <br /> 
+
     }
 }
