@@ -67,6 +67,7 @@ jobs:
         with:
           name: DotNet Tests
           path: "**/test-results.trx"
+          reporter: all
           fail-on-error: true
           
 #       - name: Unit test report
