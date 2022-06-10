@@ -77,6 +77,9 @@ jobs:
           show pipelines
         #  if steps.unitTest.outputs.result_value == "Failed"; then
          #   job.status = "Failed"
+       
+      - name: Testing the Warning Workflow Command 2
+        run: echo '::warning file=test.js,line=1,endColumn=5,col=4,endLine=3,title=Warning::You should spell out your PowerShell commands'
           
         
 
