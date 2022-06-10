@@ -71,11 +71,12 @@ jobs:
           #fail_build_on_failed_tests: true
           set_check_status_from_test_outcome: true
         
-      - name: Test dotnet status echo
+      - name: Test dotnet status echo # stond eerst #exit 0 of 1
         run: |
           echo "${{ steps.unitTest.outputs.result_value }}"
           if steps.unitTest.outputs.result_value == "Failed"; then
-            exit 0
+            job.status = "Failed"
+          
         
 
     
