@@ -74,7 +74,7 @@ jobs:
       - name: Test dotnet status echo # stond eerst #exit 0 of 1
         run: |
           echo "${{ steps.unitTest.outputs.result_value }}"
-          echo show pipelines
+          show pipelines
         #  if steps.unitTest.outputs.result_value == "Failed"; then
          #   job.status = "Failed"
           
