@@ -72,7 +72,7 @@ jobs:
           set_check_status_from_test_outcome: true
         
       - name: Test run
-        run: echo " ${{ unitTest.output.Counters_total }}"
+        run: echo " ${{ steps.unitTest.outputs.result_value }}"
     
                
   run-linters: #####zelf toegevoegd linters
