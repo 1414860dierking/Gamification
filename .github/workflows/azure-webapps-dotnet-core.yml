@@ -75,7 +75,7 @@ jobs:
         run: |
           echo "${{ steps.unitTest.outputs.result_value }}"
           if steps.unitTest.outputs.result_value == "Failed"; then
-            exit 1
+            exit 0
         
 
     
