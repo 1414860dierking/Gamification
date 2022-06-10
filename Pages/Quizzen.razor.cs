@@ -170,10 +170,10 @@ namespace Gamification.Pages
 			}
 		}
 
-		public async void GoToQuestions(Quiz quiz)
+		public async void GoToShowQuiz(Quiz quiz)
         {
 			await QuizService.Set(quiz);
-            NavigationManager.NavigateTo("PlayQuiz");
+            NavigationManager.NavigateTo("ShowQuiz");
         }
 
 
