@@ -72,11 +72,12 @@ jobs:
           set_check_status_from_test_outcome: true
         
       - name: Test dotnet status echo
-        run: echo "${{ steps.unitTest.outputs.result_value }}"
-      
-      - name: Exit job Test
-        if: steps.unitTest.outputs.result_value == "Failed"
-        run: exit 1
+        run: |
+          echo "${{ steps.unitTest.outputs.result_value }}"
+          if steps.unitTest.outputs.result_value == "Failed"; then
+            exit 1
+        
+
     
                
   run-linters: #####zelf toegevoegd linters
