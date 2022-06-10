@@ -71,8 +71,8 @@ jobs:
           #fail_build_on_failed_tests: true
           set_check_status_from_test_outcome: true
         
-      - name: Test run
-        run: echo " ${{ steps.unitTest.outputs.result_value }}"
+      - name: Test dotnet status echo
+        run: echo "${{ steps.unitTest.outputs.result_value }}"
     
                
   run-linters: #####zelf toegevoegd linters
@@ -97,7 +97,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test, run-linters]
-    #if: unitTest. == Failure()
+    if: steps.unitTest.outputs.result_value == "Failed"
     steps:
       - uses: actions/checkout@v3
 
