@@ -28,6 +28,9 @@ on:
   push:
     branches:
       - proberen
+      - test
+      - develop
+      - production
   workflow_dispatch:
 
 permissions:
@@ -65,26 +68,6 @@ jobs:
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           #fail_build_on_failed_tests: true
-          
-      - name: Test echo
-        run: 
-          echo Counters_passed
-        
-#   unit-test:
-#     name: Unit test
-#     permissions: write-all
-#     runs-on: ubuntu-latest
-#     steps:
-# #       - name: Test                                                #zelf toegevoegd
-# #         run: dotnet test --no-build --verbosity normal            #zelf toegevoegd
-        
-#       - name: Unit test report
-#         uses: zyborg/dotnet-tests-report@v1
-#         with:
-#           report_name: test.results.md
-#           report_title: Unit tests
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           fail_build_on_failed_tests: true
     
                
   run-linters: #####zelf toegevoegd linters
@@ -141,7 +124,8 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+
+  deploy-development:
     permissions:
       contents: none
     runs-on: ubuntu-latest
@@ -150,7 +134,31 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    if: github.ref == 'refs/heads/test' #enkel deploy vanuit test branch
+    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/development' ###mag alleen runnen vanuit test/development
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+  deploy-production:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    if: github.ref == 'refs/heads/production' ###mag alleen runnen vanuit production
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
