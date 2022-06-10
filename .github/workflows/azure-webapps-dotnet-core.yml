@@ -59,27 +59,33 @@ jobs:
             ${{ runner.os }}-nuget-
             
       - name: Test                                                #zelf toegevoegd
-        run: dotnet test --no-build            #zelf toegevoegd
-            
-      - name: Unit test report
-        id: unitTest
-        uses: zyborg/dotnet-tests-report@v1
+        run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
+      
+      - name: test report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          report_name: test.results.md
-          report_title: Unit tests
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          #fail_build_on_failed_tests: true
-          set_check_status_from_test_outcome: true
+          name: DotNet Tests
+          path: "**/test-results.trx"
+          reporter: dotnet=trx
+          fail-on-error: true
+          
+#       - name: Unit test report
+#         id: unitTest
+#         uses: zyborg/dotnet-tests-report@v1
+#         with:
+#           report_name: test.results.md
+#           report_title: Unit tests
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           #fail_build_on_failed_tests: true
+#           set_check_status_from_test_outcome: true
         
       - name: Test dotnet status echo # stond eerst #exit 0 of 1
         run: |
           echo "${{ steps.unitTest.outputs.result_value }}"
-          show pipelines
         #  if steps.unitTest.outputs.result_value == "Failed"; then
          #   job.status = "Failed"
        
-      - name: Testing the Warning Workflow Command 2
-        run: echo '::warning file=test.js,line=1,endColumn=5,col=4,endLine=3,title=Warning::You should spell out your PowerShell commands'
           
         
 
