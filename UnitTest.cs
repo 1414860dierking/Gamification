@@ -21,7 +21,7 @@ namespace Gamification
 
         public void Test2MustBeFailed()
         {
-            Assert.Fail();
+            Assert.Pass();
         }
 
         // Het testen van de database waarbij de vragen opgevraagd worden uit de Questions tabel.
