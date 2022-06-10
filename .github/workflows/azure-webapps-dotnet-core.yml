@@ -73,6 +73,10 @@ jobs:
         
       - name: Test dotnet status echo
         run: echo "${{ steps.unitTest.outputs.result_value }}"
+      
+      - name: Exit job Test
+        if: steps.unitTest.outputs.result_value == "Failed"
+        run: exit 1
     
                
   run-linters: #####zelf toegevoegd linters
@@ -97,7 +101,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [test, run-linters]
-    if: test.steps.unitTest.outputs.result_value == "Failed"
+    #if: test.steps.unitTest.outputs.result_value == "Failed"
     steps:
       - uses: actions/checkout@v3
 
