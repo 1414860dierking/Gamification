@@ -68,6 +68,7 @@ jobs:
           report_title: Unit tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           #fail_build_on_failed_tests: true
+          set_check_status_from_test_outcome: true
     
                
   run-linters: #####zelf toegevoegd linters
