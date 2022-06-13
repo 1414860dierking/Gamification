@@ -1,13 +1,14 @@
 ﻿@page "/PlayQuiz"
 
 
+
 @if (QuizService.Quiz != null)
 {
     @if (AnswerMode)
     {
         if (CorrectAnswer)
         {
-            <div style="background-color:green">
+            <div style="background-color:#01af07">
         
             <h2>Quiz @QuizService.Quiz.Name</h2> 
 
@@ -20,22 +21,24 @@
                 {
                     if(answer == ChosenAnswer)
                     {
-                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
                         <a> &nbsp; @answer.AnswerValue </a>
-                        <img src="image/check.png" alt="check"/>
+                        <img src="images/check.png" alt="check"/>
                     }
                     else
                     {
-                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
                         <a> &nbsp; @answer.AnswerValue </a>
                     }
                 }
-            <button @onclick="LoadQuestion" class="btn btn-check">Volgende vraag</button>
+
+            <br/>
+            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
             </div>
         }
         else
         {
-            <div style="background-color:red">
+            <div style="background-color:#bd0202">
         
             <h2>Quiz @QuizService.Quiz.Name</h2> 
 
@@ -48,28 +51,30 @@
                 {
                     if(answer == ChosenAnswer)
                     {
-                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
                         <a> &nbsp; @answer.AnswerValue </a>
-                        <img src="image/cross.png" alt="cross"/>
+                        <img src="images/cross.png" alt="cross"/>
                     }
                     else
                     {
                         if (answer.CorrectAnswer)
                         {
-                            <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
                             <a> &nbsp; @answer.AnswerValue </a>
-                            <img src="image/check.png" alt="check"/>
+                            <img src="images/check.png" alt="check"/>
                         }
                         else
                         {
-                            <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
                             <a> &nbsp; @answer.AnswerValue </a>
                         }
                     }
                     
                 }
 
-            <button @onclick="LoadQuestion" class="btn btn-check">Volgende vraag</button>
+            <br/>
+
+            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
             </div>
         }
     }
