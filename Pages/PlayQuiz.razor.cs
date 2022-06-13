@@ -8,7 +8,8 @@ namespace Gamification.Pages
 {
 	public partial class PlayQuiz
 	{
-
+		bool AnswerMode { get; set; }
+		bool CorrectAnswer { get; set; }
 
 		[Inject] QuizService QuizService { get; set; }
 
@@ -20,14 +21,19 @@ namespace Gamification.Pages
 
 		List<Answer> CurrentAnswers { get; set; }
 
+		int CorrectAnswerCount { get; set; }
+		Answer ChosenAnswer { get; set; }
+
 
 		SqlConnection sqlConnection;
 
 
 		public PlayQuiz()
 		{
-			CurrentAnswers = new List<Answer>();
+			CorrectAnswerCount = 0;
 			QuestionNumber = 0;
+			AnswerMode = false;
+			CorrectAnswer = false;
 		}
 
 
@@ -69,14 +75,11 @@ namespace Gamification.Pages
 
 				sqlDataReader.Close();
 				sqlConnection.Close();
-
-			
-				sqlConnection.Open();
+				List<Answer> answers = new List<Answer>();
 
 				foreach (Question question in questions)
                 {
-					List<Answer> answers = new List<Answer>();
-
+					sqlConnection.Open();
 					string queryString2 = $"SELECT * FROM dbo.Answers WHERE QuestionsId = {question.Id}";
 					SqlCommand sqlCommand2 = new SqlCommand(queryString2, sqlConnection);
 					SqlDataReader sqlDataReader2 = sqlCommand2.ExecuteReader();
@@ -92,54 +95,73 @@ namespace Gamification.Pages
 						});
 
 					}
-
-					ListOfAnswers = answers;
+					sqlDataReader.Close();
+					sqlConnection.Close();
 				}
-
-				sqlDataReader.Close();
-				sqlConnection.Close();
+				ListOfAnswers = answers;
 				ListOfQuestions = questions;
 			}
 			catch (Exception)
 			{
 				throw;
 			}
-
+			LoadQuestion();
 
 		}
 
 		private void LoadQuestion()
         {
-			foreach(Question question in ListOfQuestions)
-            {
-				if (question.SequenceNumber == QuestionNumber)
-                {
-					List<Answer> answers = new List<Answer>();
-					CurrentQuestion = question;
-					foreach(Answer answer in ListOfAnswers)
-                    {
-						if (answer.Question.Id == question.Id)
-                        {
-							answers.Add(answer);
-                        }
-                    }
-					
-                }
-				break;
-            }
+			AnswerMode = false;
+			QuestionNumber++;
+			if (QuestionNumber <= ListOfQuestions.Count())
+			{
+				if (ListOfQuestions != null && ListOfQuestions.Count() > 0)
+				{
+					foreach (Question question in ListOfQuestions)
+					{
+						if (question.SequenceNumber == QuestionNumber)
+						{
+							List<Answer> answers = new List<Answer>();
+							CurrentQuestion = question;
+							foreach (Answer answer in ListOfAnswers)
+							{
+								if (answer.Question.Id == question.Id)
+								{
+									answers.Add(answer);
+								}
+							}
+							StateHasChanged();
+							CurrentAnswers = answers;
+							break;
+
+						}
+
+					}
+				}
+				//afvangen indien geen vragen
+			}
+			else
+			{
+				//EINDE QUIZ
+			}
         }
 
-		private void ChosenAnswer(Answer answer)
+		private void ClickAnswer(Answer answer)
         {
-			QuestionNumber++;
-			if (QuestionNumber < ListOfQuestions.Count())
+			if (answer.CorrectAnswer)
             {
-				LoadQuestion();
+				AnswerMode = true;
+				CorrectAnswer = true;
+				CorrectAnswerCount++;
+				ChosenAnswer = answer;
             }
             else
             {
-				//EINDE QUIZ
-            }
+				AnswerMode = true;
+				CorrectAnswer = false;
+				ChosenAnswer = answer;
+			}
+			StateHasChanged();
         }
 
 	}

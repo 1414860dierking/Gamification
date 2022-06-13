@@ -3,45 +3,97 @@
 
 @if (QuizService.Quiz != null)
 {
-    <div>
-        
-        <h3>Quiz naam: @QuizService.Quiz.Name </h3> 
-            
-        <br/>
-
-        
-        @foreach (Gamification.Models.Question question in ListOfQuestions)
+    @if (AnswerMode)
+    {
+        if (CorrectAnswer)
         {
-            CurrentQuestion = question;
+            <div style="background-color:green">
+        
+            <h2>Quiz @QuizService.Quiz.Name</h2> 
 
-            <a>@question.Title </a>
-            <br /> 
-            <a>@question.Description </a>
-            
+            <p>Vraag @QuestionNumber</p>
+
+            <h3>@CurrentQuestion.Title</h3>
+            <p>@CurrentQuestion.Description</p>
+
             @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                {
+                    if(answer == ChosenAnswer)
+                    {
+                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                        <img src="image/check.png" alt="check"/>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                    }
+                }
+            <button @onclick="LoadQuestion" class="btn btn-check">Volgende vraag</button>
+            </div>
+        }
+        else
+        {
+            <div style="background-color:red">
+        
+            <h2>Quiz @QuizService.Quiz.Name</h2> 
+
+            <p>Vraag @QuestionNumber</p>
+
+            <h3>@CurrentQuestion.Title</h3>
+            <p>@CurrentQuestion.Description</p>
+
+            @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                {
+                    if(answer == ChosenAnswer)
+                    {
+                        <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                        <img src="image/cross.png" alt="cross"/>
+                    }
+                    else
+                    {
+                        if (answer.CorrectAnswer)
+                        {
+                            <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                            <a> &nbsp; @answer.AnswerValue </a>
+                            <img src="image/check.png" alt="check"/>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-info"> @answer.AnswerType</a>
+                            <a> &nbsp; @answer.AnswerValue </a>
+                        }
+                    }
+                    
+                }
+
+            <button @onclick="LoadQuestion" class="btn btn-check">Volgende vraag</button>
+            </div>
+        }
+    }
+    else
+    {
+        <div>
+        
+        <h2>Quiz @QuizService.Quiz.Name</h2> 
+
+        <p>Vraag @QuestionNumber</p>
+
+        <h3>@CurrentQuestion.Title</h3>
+        <p>@CurrentQuestion.Description</p>
+
+        @foreach (Gamification.Models.Answer answer in CurrentAnswers)
             {
-                <br /> 
-                <Button class="btn btn-outline-info" @onclick="@( _ => ChosenAnswer(answer) )" > @answer.AnswerType</Button>
+                <Button class="btn btn-outline-info" @onclick="@( _ => ClickAnswer(answer) )" > @answer.AnswerType</Button>
                 <a> &nbsp; @answer.AnswerValue </a>
 
             }
 
-
-            <br /> 
-            <br /> 
-
-        }
-
-
-
-
-
-
-    </div>
-
+        </div>
+    }
 } 
-
-
 
 
 @code {
