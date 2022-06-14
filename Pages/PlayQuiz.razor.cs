@@ -24,6 +24,7 @@ namespace Gamification.Pages
 		int CorrectAnswerCount { get; set; }
 		Answer ChosenAnswer { get; set; }
 
+		[Inject] NavigationManager NavigationManager { get; set; }
 
 		SqlConnection sqlConnection;
 
@@ -138,11 +139,14 @@ namespace Gamification.Pages
 
 					}
 				}
-				//afvangen indien geen vragen
+                //afvangen indien geen vragen
+
 			}
 			else
 			{
 				//EINDE QUIZ
+
+				StateHasChanged();
 			}
         }
 
@@ -163,6 +167,11 @@ namespace Gamification.Pages
 			}
 			StateHasChanged();
         }
+
+		private void Home()
+        {
+			NavigationManager.NavigateTo("/");
+		}
 
 	}
 }

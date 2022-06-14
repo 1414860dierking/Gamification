@@ -2,17 +2,27 @@
 
 
 
-@if (QuizService.Quiz != null)
+@if(QuestionNumber > ListOfQuestions.Count())
 {
+    <h2>Quiz @QuizService.Quiz.Name</h2> 
+    <p>U heeft @CorrectAnswerCount vraag/vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+    <button @onclick="Home" class="btn btn-primary">terug naar home</button>
+}
+else
+{
+    @if (QuizService.Quiz != null)
+    {
+    
     @if (AnswerMode)
     {
         if (CorrectAnswer)
         {
+            
             <div style="background-color:#01af07">
         
             <h2>Quiz @QuizService.Quiz.Name</h2> 
 
-            <p>Vraag @QuestionNumber</p>
+            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
 
             <h3>@CurrentQuestion.Title</h3>
             <p>@CurrentQuestion.Description</p>
@@ -35,6 +45,7 @@
             <br/>
             <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
             </div>
+            
         }
         else
         {
@@ -42,7 +53,7 @@
         
             <h2>Quiz @QuizService.Quiz.Name</h2> 
 
-            <p>Vraag @QuestionNumber</p>
+            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
 
             <h3>@CurrentQuestion.Title</h3>
             <p>@CurrentQuestion.Description</p>
@@ -84,7 +95,7 @@
         
         <h2>Quiz @QuizService.Quiz.Name</h2> 
 
-        <p>Vraag @QuestionNumber</p>
+        <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
 
         <h3>@CurrentQuestion.Title</h3>
         <p>@CurrentQuestion.Description</p>
@@ -98,8 +109,9 @@
 
         </div>
     }
-} 
-
+    
+    } 
+}
 
 @code {
 
