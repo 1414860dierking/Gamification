@@ -18,6 +18,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,8 +26,14 @@
     <None Remove="Auth0.Core" />
     <None Remove="Auth0.AspNetCore.Authentication" />
     <None Remove="Models\" />
+    <None Remove="Microsoft.AspNetCore.SignalR.Client" />
+    <None Remove="System.Text.Encodings.Web" />
+    <None Remove="Hubs\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Hubs\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
