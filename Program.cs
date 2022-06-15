@@ -1,4 +1,4 @@
-﻿using Gamification.Data;
+﻿
 using Gamification.Services;
 using Auth0.AspNetCore.Authentication;
 ﻿using Auth0.AspNetCore.Authentication;

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0-preview.4.22229.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0-preview.4.22229.2">
       <PrivateAssets>all</PrivateAssets>
@@ -34,6 +41,5 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Hubs\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
