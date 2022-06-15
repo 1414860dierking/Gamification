@@ -2,48 +2,117 @@
 
 
 
-@if (QuizService.Quiz != null)
+@if(QuestionNumber > ListOfQuestions.Count())
 {
-    <div>
-
-   
-        <h3>Quiz naam: @QuizService.Quiz.Name 
-            <button class="btn btn-primary" style="float: right">Maak deze quiz</button>
-            </h3> 
-        
-        
-
-
-        <H5>Omschrijving quiz: <br /> @QuizService.Quiz.Description</H5>
- </div>
-
+    <h2>Quiz @QuizService.Quiz.Name</h2> 
+    <p>U heeft @CorrectAnswerCount vraag/vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+    <button @onclick="Home" class="btn btn-primary">terug naar home</button>
 }
- <br />
-
-
-
-@*<h4>Vragen: </h4>*@
-
-
-
-
-@*
-@if (ListOfQuestions != null)
+else
 {
-    foreach (Gamification.Models.Question questions in ListOfQuestions)
+    @if (QuizService.Quiz != null)
     {
-        <a >@questions.Title @questions.Description</a>
+    
+    @if (AnswerMode)
+    {
+        if (CorrectAnswer)
+        {
+            
+            <div style="background-color:#01af07">
         
-        <br />
+            <h2>Quiz @QuizService.Quiz.Name</h2> 
+
+            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
+
+            <h3>@CurrentQuestion.Title</h3>
+            <p>@CurrentQuestion.Description</p>
+
+            @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                {
+                    if(answer == ChosenAnswer)
+                    {
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                        <img src="images/check.png" alt="check"/>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                    }
+                }
+
+            <br/>
+            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
+            </div>
+            
+        }
+        else
+        {
+            <div style="background-color:#bd0202">
+        
+            <h2>Quiz @QuizService.Quiz.Name</h2> 
+
+            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
+
+            <h3>@CurrentQuestion.Title</h3>
+            <p>@CurrentQuestion.Description</p>
+
+            @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                {
+                    if(answer == ChosenAnswer)
+                    {
+                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue </a>
+                        <img src="images/cross.png" alt="cross"/>
+                    }
+                    else
+                    {
+                        if (answer.CorrectAnswer)
+                        {
+                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                            <a> &nbsp; @answer.AnswerValue </a>
+                            <img src="images/check.png" alt="check"/>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                            <a> &nbsp; @answer.AnswerValue </a>
+                        }
+                    }
+                    
+                }
+
+            <br/>
+
+            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
+            </div>
+        }
     }
-}*@
+    else
+    {
+        <div>
+        
+        <h2>Quiz @QuizService.Quiz.Name</h2> 
 
+        <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
 
+        <h3>@CurrentQuestion.Title</h3>
+        <p>@CurrentQuestion.Description</p>
 
+        @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+            {
+                <Button class="btn btn-outline-info" @onclick="@( _ => ClickAnswer(answer) )" > @answer.AnswerType</Button>
+                <a> &nbsp; @answer.AnswerValue </a>
 
+            }
 
+        </div>
+    }
+    
+    } 
+}
 
 @code {
-
 
 }
