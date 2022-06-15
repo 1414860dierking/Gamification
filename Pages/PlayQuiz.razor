@@ -1,11 +1,18 @@
 ﻿@page "/PlayQuiz"
 
-
-
-@if(QuestionNumber > ListOfQuestions.Count())
+<body style="padding:0px; margin:0; width:100%; height:100%">
+    @if(QuestionNumber > ListOfQuestions.Count())
 {
-    <h2>Quiz @QuizService.Quiz.Name</h2> 
-    <p>U heeft @CorrectAnswerCount vraag/vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+    <h2>Quiz @QuizService.Quiz.Name</h2>
+    if (CorrectAnswerCount == 1)
+    {
+        <p>U heeft @CorrectAnswerCount vraag goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+    }
+    else
+    {
+        <p>U heeft @CorrectAnswerCount vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+    }
+    
     <button @onclick="Home" class="btn btn-primary">Terug naar home</button>
 }
 else
@@ -16,10 +23,9 @@ else
     @if (AnswerMode)
     {
         if (CorrectAnswer)
-        {
-            
-            <div style="background-color:#01af07">
+        {            
         
+            <div style="background-color:green; margin:0; padding:15px; width:100%; height:100%; display:block">
             <h2>Quiz @QuizService.Quiz.Name</h2> 
 
             <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
@@ -51,9 +57,8 @@ else
         }
         else
         {
-            <div style="background-color:#bd0202">
-        
-            <h2>Quiz @QuizService.Quiz.Name</h2> 
+            <div style="background-color:red; margin:0; padding:15px; width:100%; height:100%; display:block">
+                <h2>Quiz @QuizService.Quiz.Name</h2> 
 
             <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
 
@@ -92,11 +97,13 @@ else
 
             <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
             </div>
+        
+            
         }
     }
     else
     {
-        <div>
+        <div style="margin:0; padding:15px; width:100%; height:100%; display:block">
         
         <h2>Quiz @QuizService.Quiz.Name</h2> 
 
@@ -117,6 +124,9 @@ else
     
     } 
 }
+</body>
+
+
 
 @code {
 
