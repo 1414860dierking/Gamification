@@ -1,0 +1,49 @@
+﻿@page "/ShowQuiz"
+
+
+
+@if (QuizService.Quiz != null)
+{
+    <div>
+        
+        <h3>Quiz naam: @QuizService.Quiz.Name 
+
+
+            <button class="btn btn-primary" style="float: right" @onclick="@( _ => GoToPlayQuiz(QuizService.Quiz) )">Maak deze quiz</button>
+        </h3> 
+            
+
+        <H5>Omschrijving quiz: <br /> @QuizService.Quiz.Description</H5>
+
+    </div>
+
+}
+ <br />
+
+
+
+@*<h4>Vragen: </h4>*@
+
+
+
+
+@*
+@if (ListOfQuestions != null)
+{
+    foreach (Gamification.Models.Question questions in ListOfQuestions)
+    {
+        <a >@questions.Title @questions.Description</a>
+        
+        <br />
+    }
+}*@
+
+
+
+
+
+
+@code {
+
+
+}

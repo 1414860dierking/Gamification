@@ -17,7 +17,7 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy ASP.Net Core app to an Azure Web App TEST manon
+name: Build and deploy ASP.Net Core app to an Azure Web App UnitTesting
 
 env:
   AZURE_WEBAPP_NAME: B2C6Gamification-develop    # set this to the name of your Azure Web App
@@ -27,7 +27,10 @@ env:
 on:
   push:
     branches:
+      - proberen
       - test
+      - develop
+      - production
   workflow_dispatch:
 
 permissions:
@@ -35,7 +38,8 @@ permissions:
 
 jobs:
   test: #### zelf toegevoegd
-    name: test application
+    name: Test application
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: checkout repository
@@ -54,10 +58,39 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
             
-      - name: Test                                                    #zelf toegevoegd
-        run: dotnet test --no-build --verbosity normal             #zelf toegevoegd
-  
-  
+      - name: Test                                                #zelf toegevoegd
+        run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
+      
+      - name: test report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: DotNet Tests
+          path: "**/test-results.trx"
+          reporter: 'dotnet-trx'
+          fail-on-error: true
+          
+#       - name: Unit test report
+#         id: unitTest
+#         uses: zyborg/dotnet-tests-report@v1
+#         with:
+#           report_name: test.results.md
+#           report_title: Unit tests
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           #fail_build_on_failed_tests: true
+#           set_check_status_from_test_outcome: true
+        
+      - name: Test dotnet status echo # stond eerst #exit 0 of 1
+        run: |
+          echo "${{ steps.unitTest.outputs.result_value }}"
+        #  if steps.unitTest.outputs.result_value == "Failed"; then
+         #   job.status = "Failed"
+       
+          
+        
+
+    
+               
   run-linters: #####zelf toegevoegd linters
     name: testing met linters
     permissions: write-all
@@ -79,7 +112,8 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-
+    needs: [test, run-linters]
+    #if: test.steps.unitTest.outputs.result_value == "Failed"
     steps:
       - uses: actions/checkout@v3
 
@@ -111,7 +145,8 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+
+  deploy-development:
     permissions:
       contents: none
     runs-on: ubuntu-latest
@@ -120,6 +155,31 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
+    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit test/development
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+  deploy-production:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    if: github.ref == 'refs/heads/production' ###mag alleen runnen vanuit production
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
