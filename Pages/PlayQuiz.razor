@@ -6,7 +6,7 @@
 {
     <h2>Quiz @QuizService.Quiz.Name</h2> 
     <p>U heeft @CorrectAnswerCount vraag/vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
-    <button @onclick="Home" class="btn btn-primary">terug naar home</button>
+    <button @onclick="Home" class="btn btn-primary">Terug naar home</button>
 }
 else
 {
@@ -31,14 +31,16 @@ else
                 {
                     if(answer == ChosenAnswer)
                     {
-                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
-                        <a> &nbsp; @answer.AnswerValue </a>
-                        <img src="images/check.png" alt="check"/>
+                        <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue</a>
+                        <img src="images/check.png" alt="check" style="height:40px">
+                        <br/>
                     }
                     else
                     {
-                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
-                        <a> &nbsp; @answer.AnswerValue </a>
+                        <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                        <a> &nbsp; @answer.AnswerValue</a>
+                        <br/>
                     }
                 }
 
@@ -62,22 +64,25 @@ else
                 {
                     if(answer == ChosenAnswer)
                     {
-                        <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                        <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
                         <a> &nbsp; @answer.AnswerValue </a>
-                        <img src="images/cross.png" alt="cross"/>
+                        <img src="images/cross.png" alt="cross" style="height:40px"/>
+                        <br/>
                     }
                     else
                     {
                         if (answer.CorrectAnswer)
                         {
-                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                            <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
                             <a> &nbsp; @answer.AnswerValue </a>
-                            <img src="images/check.png" alt="check"/>
+                            <img src="images/check.png" alt="check" style="height:40px"/>
+                            <br/>
                         }
                         else
                         {
-                            <a class="btn btn-outline-info" style="pointer-events:none"> @answer.AnswerType</a>
+                            <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
                             <a> &nbsp; @answer.AnswerValue </a>
+                            <br/>
                         }
                     }
                     
@@ -102,9 +107,9 @@ else
 
         @foreach (Gamification.Models.Answer answer in CurrentAnswers)
             {
-                <Button class="btn btn-outline-info" @onclick="@( _ => ClickAnswer(answer) )" > @answer.AnswerType</Button>
+                <Button style="margin:4px" class="btn btn-outline-info" @onclick="@( _ => ClickAnswer(answer) )" > @answer.AnswerType</Button>
                 <a> &nbsp; @answer.AnswerValue </a>
-
+                <br/>
             }
 
         </div>
