@@ -29,11 +29,9 @@
     <None Remove="Microsoft.AspNetCore.SignalR.Client" />
     <None Remove="System.Text.Encodings.Web" />
     <None Remove="Hubs\" />
-    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Hubs\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
