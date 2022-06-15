@@ -5,6 +5,8 @@ using Gamification.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Bunit;
 
 namespace Gamification
 {
@@ -113,6 +115,23 @@ namespace Gamification
         public void TestPage()
         {
             
+        }
+
+        [Test]
+        public void Test234()
+        {
+            // Arrange
+            using var ctx = new Bunit.TestContext();
+            var cut = ctx.RenderComponent<ClickMe>();
+            var buttonElement = cut.Find("button");
+
+            // Act
+            buttonElement.Click();
+            buttonElement.Click(detail: 3, ctrlKey: true);
+            buttonElement.Click(new MouseEventArgs());
+
+            // Assert
+            // ...
         }
     }
 }

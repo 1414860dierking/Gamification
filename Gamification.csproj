@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="bunit" Version="1.9.8" />
+    <PackageReference Include="bunit.core" Version="1.9.8" />
+    <PackageReference Include="bunit.web" Version="1.9.8" />
+    <PackageReference Include="bunit.web.testcomponents" Version="1.9.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0-preview.4.22229.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0-preview.4.22229.2">
       <PrivateAssets>all</PrivateAssets>
