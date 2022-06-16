@@ -52,7 +52,36 @@ else
 
             <br/>
             <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
-            </div>
+            <br/>
+
+                    </div>
+
+                    int knowledgeBaseCount = 0;
+                    foreach(Gamification.Models.KnowledgeBaseItem knowledgeBaseItem in KnowledgeBaseItems)
+                    {
+                        if(knowledgeBaseItem.QuestionsId == CurrentQuestion.Id)
+                        {
+                            <br/>
+                            <h3>Kennisbankitems uitleg:</h3>
+                            
+                            <h4>@knowledgeBaseItem.Title</h4>
+                           
+                            <a>@knowledgeBaseItem.Description</a>
+                            <br/>
+                            @if (!String.IsNullOrEmpty(knowledgeBaseItem.ExternalLink))
+                            {
+                                <a>Link: @knowledgeBaseItem.ExternalLink</a>
+                            }
+                            
+                            knowledgeBaseCount++;
+                        }
+                    }
+                    if(knowledgeBaseCount == 0)
+                    {
+                         <br/>
+                            <a>Er is geen kennisbank uitleg bij deze vraag.</a>
+                    }
+
             
         }
         else
@@ -96,7 +125,34 @@ else
             <br/>
 
             <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
+            <br/>
             </div>
+
+            int knowledgeBaseCount = 0;
+                    foreach(Gamification.Models.KnowledgeBaseItem knowledgeBaseItem in KnowledgeBaseItems)
+                    {
+                        if(knowledgeBaseItem.QuestionsId == CurrentQuestion.Id)
+                        {
+                            <br/>
+                            <h3>Kennisbankitems uitleg:</h3>
+                            
+                            <h4>@knowledgeBaseItem.Title</h4>
+                           
+                            <a>@knowledgeBaseItem.Description</a>
+                            <br/>
+                            @if (!String.IsNullOrEmpty(knowledgeBaseItem.ExternalLink))
+                            {
+                                <a>Link: @knowledgeBaseItem.ExternalLink</a>
+                            }
+
+                            knowledgeBaseCount++;
+                        }
+                    }
+                    if(knowledgeBaseCount == 0)
+                    {
+                         <br/>
+                            <a>Er is geen kennisbank uitleg bij deze vraag.</a>
+                    }
         
             
         }

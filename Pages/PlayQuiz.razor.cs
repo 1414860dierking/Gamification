@@ -21,12 +21,16 @@ namespace Gamification.Pages
 
 		List<Answer> CurrentAnswers { get; set; }
 
+		List<KnowledgeBaseItem> KnowledgeBaseItems { get; set; }
+
 		int CorrectAnswerCount { get; set; }
 		Answer ChosenAnswer { get; set; }
 
 		[Inject] NavigationManager NavigationManager { get; set; }
 
 		SqlConnection sqlConnection;
+
+		
 
 
 		public PlayQuiz()
@@ -35,12 +39,16 @@ namespace Gamification.Pages
 			QuestionNumber = 0;
 			AnswerMode = false;
 			CorrectAnswer = false;
+
+			GetKnowledgeBaseItems();
 		}
 
 
 		protected override async Task OnInitializedAsync()
 		{
+			
 			await GetQuestionsAnswers();
+			
 		}
 
 
@@ -173,6 +181,42 @@ namespace Gamification.Pages
 			NavigationManager.NavigateTo("/");
 		}
 
+		private void GetKnowledgeBaseItems()
+		{
+
+			string sqlconn = "Server=tcp:gamification-dev.database.windows.net,1433;Initial Catalog=Gamification-Dev;Persist Security Info=False;User ID=gamification;Password=rVRm7VSymNs5NUj;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+			sqlConnection = new SqlConnection(sqlconn);
+
+
+			sqlConnection.Open();
+
+			List<KnowledgeBaseItem> knowledgeBaseItems = new List<KnowledgeBaseItem>();
+
+			string queryString = $"SELECT * FROM dbo.KnowledgeBaseItems";
+			SqlCommand sqlCommand = new SqlCommand(queryString, sqlConnection);
+			SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+			while (sqlDataReader.Read())
+			{
+				knowledgeBaseItems.Add(new KnowledgeBaseItem()
+				{
+					Id = Convert.ToInt32(sqlDataReader["Id"]),
+					Title = sqlDataReader["Title"].ToString(),
+					Description = sqlDataReader["Description"].ToString(),
+					ExternalLink = sqlDataReader["ExternalLink"].ToString(),
+					QuestionsId = Convert.ToInt32(sqlDataReader["QuestionsId"]),
+					QuizzenId = Convert.ToInt32(sqlDataReader["QuizzenId"])
+
+				});
+
+				KnowledgeBaseItems = knowledgeBaseItems;
+
+			}
+
+			sqlDataReader.Close();
+			sqlConnection.Close();
+			
+
+		}
 	}
 }
 
