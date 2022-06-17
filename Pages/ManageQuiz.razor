@@ -1,0 +1,59 @@
+﻿@attribute [Authorize]
+@page "/ManageQuiz"
+
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
+
+<button class="btn btn-primary" style="float:right; text-align: right; margin:5px; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToCreateQuiz() )"> Maak een nieuwe quiz.</button>
+
+<h3>Quizzen beheren</h3>
+
+
+<label for="Subjects">Kies een faculteit:</label>
+
+<select name="Faculty" id="Faculty.Id" @onchange="@OnSelectFaculty">
+    <option value="" disabled selected hidden>Kies faculteit...</option>
+    @foreach (Gamification.Models.Faculty faculty in ListOfFaculties)
+    {
+        <option value="@faculty.Id">@faculty.Name</option>
+    }
+</select>
+
+<label for="Subjects">Kies een vak:</label>
+
+<select name="Subjects" id="Subject.Id" @onchange="@OnSelectSubject">
+    <option value="" disabled selected hidden>Kies vak...</option>
+    @if (ListOfSubjects != null)
+    {
+        foreach (Gamification.Models.Subject subject in ListOfSubjects)
+        {
+            <option value="@subject.Id">@subject.Name</option>
+        }
+    }
+</select>
+</div>
+
+<br />
+
+
+
+@if (ListOfQuizzes != null)
+{
+    foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
+    {
+       @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
+
+       <div>
+           <button class="btn btn-secondary" style="text-align:left; margin:5px; width:100%; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToShowQuiz(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
+       </div>
+    }
+
+}
+
+
+
+
+
+@code {
+
+}
