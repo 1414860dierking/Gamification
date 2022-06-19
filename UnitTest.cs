@@ -19,6 +19,21 @@ namespace Gamification
             Assert.Pass();
         }
 
+        //[Test]
+        public void Faculties_Show_Be_One()
+        {
+            // AAA
+
+            // Arrange
+            var expected = 0;
+            var faculties = new List<Faculty>();
+            // Act
+            //faculties = quizService.GetFaculties();
+
+            // Assert
+            Assert.IsTrue(faculties.Count > expected);
+        }
+
         [Test]
 
         public void Test2MustBeFailed()
