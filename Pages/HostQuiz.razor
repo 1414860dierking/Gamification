@@ -1,0 +1,114 @@
+﻿@page "/hostquiz"
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.SignalR
+@using Gamification.Models;
+@using Gamification.Hubs;
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<PageTitle>Index</PageTitle>
+
+<h3>
+    Live quiz
+
+
+    <button class="btn btn-primary" style="float: right" @onclick="Join">Start</button>
+</h3>
+
+<input @bind="groupInput" disabled="@(!IsConnected)" placeholder="Voer een groepsnaam in..." />
+<input @bind="userInput" disabled="@(!IsConnected)" placeholder="Voer een gebruikersnaam in..." />
+
+<ul id="messagesList">
+    @foreach (var user in users)
+    {
+        <li>@user</li>
+    }
+</ul>
+
+
+
+
+
+@code {
+    private HubConnection? hubConnection;
+    private QuizHub quizHub = new QuizHub();
+    private List<string> messages = new List<string>();
+    private List<string> users = new List<string>();
+    private string? groupInput;
+    private string? userInput;
+    private string? messageInput;
+
+    private bool QuizActive;
+    private bool QuizEnd;
+    private Question? CurrentQuestion;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        QuizActive = false;
+        QuizEnd = false;
+
+        hubConnection = new HubConnectionBuilder()
+        .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+        .Build();
+
+        hubConnection.On("Start", () =>
+        {
+            QuizActive = true;
+            InvokeAsync(StateHasChanged);
+        });
+
+        hubConnection.On("End", () =>
+        {
+            QuizActive = false;
+            InvokeAsync(StateHasChanged);
+        });
+
+
+        hubConnection.On<string, string>("Join", (connectionId, user) =>
+        {
+            var encodedUsr = $"{user}";
+            users.Add(encodedUsr);
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+        StateHasChanged();
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+    }
+
+
+    private async Task Join()
+    {
+        if (hubConnection is not null)
+        {
+            if (!String.IsNullOrEmpty(userInput) && !String.IsNullOrEmpty(groupInput))
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+
+                await Clients.Group(groupName).SendAsync("Join", Context.ConnectionId, user);
+            }
+        }
+    }
+
+
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
