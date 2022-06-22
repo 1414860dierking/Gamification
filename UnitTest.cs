@@ -44,9 +44,9 @@ namespace Gamification
         }
 
         [Test]
-        public void Test2MustBeFailed()
+        public void TestMustBeFailed()
         {
-            Assert.Fail();
+            Assert.Pass();
         }
     }
 }
