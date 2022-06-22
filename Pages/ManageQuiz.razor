@@ -1,7 +1,13 @@
-﻿@page "/Quizzen"
+﻿@attribute [Authorize]
+@page "/ManageQuiz"
+
 
 <div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
-<h3>Quizzen</h3>
+
+<button class="btn btn-primary" style="float:right; text-align: right; margin:5px; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToCreateQuiz() )"> Maak een nieuwe quiz.</button>
+
+<h3>Quizzen beheren</h3>
+
 
 <label for="Subjects">Kies een faculteit:</label>
 
@@ -30,16 +36,24 @@
 <br />
 
 
+
 @if (ListOfQuizzes != null)
 {
     foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
     {
        @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
 
-
-        <button class="btn btn-secondary" style="width:1230px;text-align:left; margin:5px" @onclick="@( _ => GoToShowQuiz(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
-        
-        <br /> 
-
+       <div>
+           <button class="btn btn-secondary" style="text-align:left; margin:5px; width:100%; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToShowQuiz(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
+       </div>
     }
+
+}
+
+
+
+
+
+@code {
+
 }

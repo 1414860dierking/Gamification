@@ -1,8 +1,10 @@
-﻿using Gamification.Data;
+﻿
 using Gamification.Services;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.ResponseCompression;
+using Gamification.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,16 @@ builder.Services
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddSingleton<QuizService>();
+builder.Services.AddSingleton<IQuizService, QuizService>();
+builder.Services.AddSingleton<IFacultyService, FacultyService>();
+builder.Services.AddTransient<ISubjectService, SubjectService>();
+builder.Services.AddTransient<IKnowledgeBaseService, KnowledgeBaseService>();
+
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 
 var app = builder.Build();
 
@@ -37,6 +48,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapBlazorHub();
+app.MapHub<ChatHub>("/chathub");
+app.MapHub<QuizHub>("/quizhub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();

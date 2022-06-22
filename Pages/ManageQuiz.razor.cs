@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace Gamification.Pages
 {
-	public partial class Quizzen
-	{
+    public partial class ManageQuiz
+    {
 		private List<Faculty> ListOfFaculties { get; set; }
 
 		private int SelectedFaculty { get; set; }
@@ -26,12 +26,12 @@ namespace Gamification.Pages
 
 		[Inject] NavigationManager NavigationManager { get; set; }
 
-
-		public Quizzen()
+		public ManageQuiz()
 		{
 			PlayQuiz = new PlayQuiz();
 			GetListOfFaculties();
 		}
+
 
 		private void GetListOfFaculties()
 		{
@@ -171,12 +171,17 @@ namespace Gamification.Pages
 		}
 
 		public async void GoToShowQuiz(Quiz quiz)
+		{
+			// TODO: hier moet de doorverwijzing komen naar het bewerken van de quiz die op dat moment is aangeklikt
+		}
+
+		private void GoToCreateQuiz()
         {
-			await QuizService.Set(quiz);
-            NavigationManager.NavigateTo("ShowQuiz");
+
         }
 
-
 	}
+
+
 }
 
