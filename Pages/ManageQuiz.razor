@@ -41,19 +41,11 @@
 {
     foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
     {
-       @* <a href="PlayQuiz" @onclick="@( _ => PlayQuiz.OnClickQuiz(quiz) )">@quiz.Id  @quiz.Name  @quiz.Description</a>*@
 
        <div>
-           <button class="btn btn-secondary" style="text-align:left; margin:5px; width:100%; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToShowQuiz(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</button>
+           <a class="btn btn-secondary" style="text-align:left; margin:5px; width:100%; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => GoToShowQuiz(quiz) )"> @quiz.Id  @quiz.Name  @quiz.Description</a>
        </div>
     }
 
 }
 
-
-
-
-
-@code {
-
-}

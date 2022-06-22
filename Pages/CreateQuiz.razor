@@ -1,7 +1,110 @@
 ﻿@page "/CreateQuiz"
 
-<h3>CreateQuiz</h3>
+<h3>Quizen maken en of beheren.</h3>
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
+
+<label for="Subjects">Kies een faculteit waarvoor u de quiz wilt maken:</label>
+
+<select name="Faculty" id="Faculty.Id" @onchange="@OnSelectFaculty">
+    <option value="" disabled selected hidden>Kies faculteit...</option>
+    @foreach (Gamification.Models.Faculty faculty in ListOfFaculties)
+    {
+        <option value="@faculty.Id">@faculty.Name</option>
+    }
+</select>
+
+<label for="Subjects">Kies een vak waarvoor u de quiz wilt maken:</label>
+
+<select name="Subjects" id="Subject.Id" @onchange="@OnSelectSubject">
+    <option value="" disabled selected hidden>Kies vak...</option>
+    @if (ListOfSubjects != null)
+    {
+        foreach (Gamification.Models.Subject subject in ListOfSubjects)
+        {
+            <option value="@subject.Id">@subject.Name</option>
+        }
+    }
+</select>
+</div>
+
+<div>
+    <br />
+    <h3>Quiz informatie:</h3>
+    <input @bind="InputValueQuizName" placeholder="Naam van de quiz" style="width:100%;"/>
+    <br />
+    <textarea @bind="InputValueQuizDescription" placeholder="Omschrijving van de quiz" style="width:100%; height:150px;"/>
+    <br />
+    <a>Wilt u deze quiz als concept opslaan? Zo ja dan kan deze nog niet gespeeld of gezien worden.</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsConcept">
+    <br />
+    <a>Wilt u dat deze quiz door studenten individueel en online gespeeld kan worden?</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsOpenToFreePlay" >
+    <br />
+    <a>Wilt u dat de kennisbankitems van deze quiz worden getoond in de kennisbank?</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsOpenToKnowledgeBase">
+    <br />
+
+</div>
+
+<div>
+    <br />
+    <h3>Quiz vragen:</h3> 
+    <br />
+</div>
+
+<div>
+    <textarea @bind="Question" placeholder="Vraag" style="width:100%"/>
+    <br />
+    <textarea @bind="QuestionDescription" placeholder="Omschrijving van de vraag (optioneel)" style="width:100%"/>
+    <br />
+    <input @bind="QuestionTimeToAnswer" placeholder="Tijd om de vraag te beantwoorden (optioneel en in seconden)" style="width:100%"/>
+    <br />
+    <br />
+    <a>Uitleg: Antwoordtypen zijn a,b,c,d of Waar/Onwaar, Links/Rechts. Bij de a,b,c,d optie kunnen langere antwoorden in de antwoordvalue geschreven worden.</a>
+    <br />
+    <input @bind="Answertype1" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue1" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+    <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox1RightAnswer">
+    <br />
+    <input @bind="Answertype2" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue2" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox2RightAnswer">
+    <br />
+    <input @bind="Answertype3" placeholder="Antwoordtype" style="width:20%"/>    
+    <input @bind="Antwoordvalue3" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox3RightAnswer">
+    <br />
+    <input @bind="Answertype4" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue4" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox4RightAnswer">
+    <br />
+    <br />
+
+@*    kennisbank gedeelte nog toevoegen
+*@
+</div>
+
+<div>
+    <button class="btn btn-secondary" style="text-align:left; margin:0" > + 1 vraag </button>
+</div>
+
+<div>
+    <button class="btn btn-primary" style="float:right; text-align: right; margin:5px; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => SaveQuiz() )"> Opslaan quiz </button>
+    <br />
+    <br />
+    <br />
+</div>
+
 
 @code {
+
 
 }

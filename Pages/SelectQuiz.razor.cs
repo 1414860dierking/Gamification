@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Data.SqlClient;
 using Gamification.Models;
 using Gamification.Services;
 using Microsoft.AspNetCore.Components;
@@ -16,10 +15,6 @@ namespace Gamification.Pages
 
 		private List<Quiz> ListOfQuizzes { get; set; }
 
-		private PlayQuiz PlayQuiz { get; set; }
-
-		SqlConnection sqlConnection;
-
 		[Inject] IQuizService QuizService { get; set; }
         [Inject] IFacultyService FacultyService { get; set; }
         [Inject] ISubjectService SubjectService { get; set; }
@@ -27,16 +22,10 @@ namespace Gamification.Pages
         [Inject] NavigationManager NavigationManager { get; set; }
 
 
-		public SelectQuiz()
-		{
-            PlayQuiz = new PlayQuiz();
-        }
-
         protected override async Task OnInitializedAsync()
         {
             ListOfFaculties = FacultyService.GetFaculties();
         }
-
 
 
         void OnSelectFaculty(ChangeEventArgs e)
