@@ -142,7 +142,36 @@ namespace Gamification.Services
             return answers;
         }
 
+        public void NewQuiz(Quiz quiz, int subject)
+        {
 
+            //quiz opslaan
+
+            string sqlconn = "Server=tcp:gamification-dev.database.windows.net,1433;Initial Catalog=Gamification-Dev;Persist Security Info=False;User ID=gamification;Password=rVRm7VSymNs5NUj;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            sqlConnection = new SqlConnection(sqlconn);
+
+            try
+            {
+                sqlConnection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Quizzen (Name, Description, SubjectsId, Owner, Concept, OpenToFreePlay, OpenToKnowledgeBase) VALUES ('"+quiz.Name+"','"+quiz.Description+"',"+subject+","+"'.'"+","+Convert.ToInt32(quiz.Concept)+","+Convert.ToInt32(quiz.OpenToFreePlay)+","+Convert.ToInt32(quiz.OpenToKnowledgeBase)+")", sqlConnection))
+                {
+                    command.ExecuteNonQuery();
+                }
+                sqlConnection.Close();
+            }
+            catch
+            {
+                throw; 
+            }
+
+
+
+
+
+            //vragen opslaan
+            //in loop antwoorden opslaan
+
+        }
 
     }
 }

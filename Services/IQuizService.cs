@@ -9,6 +9,9 @@ namespace Gamification.Services
         public List<Quiz> GetQuizzes(Subject subject);
 		public List<Question> GetQuestions();
 		public List<Answer> GetAnswers(List<Question> questions);
-    }
+		public void NewQuiz(Quiz quiz, int subject);
+
+
+	}
 }
 
