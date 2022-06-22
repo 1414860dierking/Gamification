@@ -15,9 +15,10 @@ namespace Gamification
         [Test]
         public void TestGetQuiz()
         {
+            // Arrange (definiëren van alle benodigde gegevens)
             IConfiguration configuration = null;
             ISubjectService subjectService = null;
-            var test = new QuizService(configuration, subjectService);
+            QuizService quizService = new QuizService(configuration, subjectService);
 
             Quiz quiz = new Quiz();
             quiz.Id = 1;
@@ -36,11 +37,14 @@ namespace Gamification
             quiz.Subject.Faculty.Id = 1;
             quiz.Subject.Faculty.Name = "ICT";
 
-            test.SetCurrentQuiz(quiz);
+            Quiz expected = quiz;
 
-            Quiz CurrentQuiz = test.GetCurrentQuiz();
+            // Act
+            quizService.SetCurrentQuiz(quiz);
+            Quiz CurrentQuiz = quizService.GetCurrentQuiz();
 
-            Assert.IsTrue(CurrentQuiz == quiz && CurrentQuiz.Name == "Test Quiz" && quiz.Name == "Test Quiz");
+            // Assert
+            Assert.AreEqual(CurrentQuiz, expected);
         }
 
         [Test]
