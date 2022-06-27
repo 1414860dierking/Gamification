@@ -37,7 +37,7 @@ permissions:
   contents: read
 
 jobs:
-  test: #### zelf toegevoegd
+  test: #NUnit testen
     name: Test application
     permissions: write-all
     runs-on: ubuntu-latest
@@ -69,29 +69,10 @@ jobs:
           path: "**/test-results.trx"
           reporter: 'dotnet-trx'
           fail-on-error: true
-          
-#       - name: Unit test report
-#         id: unitTest
-#         uses: zyborg/dotnet-tests-report@v1
-#         with:
-#           report_name: test.results.md
-#           report_title: Unit tests
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-#           #fail_build_on_failed_tests: true
-#           set_check_status_from_test_outcome: true
-        
-      - name: Test dotnet status echo # stond eerst #exit 0 of 1
-        run: |
-          echo "${{ steps.unitTest.outputs.result_value }}"
-        #  if steps.unitTest.outputs.result_value == "Failed"; then
-         #   job.status = "Failed"
-       
-          
-        
-
+              
     
                
-  run-linters: #####zelf toegevoegd linters
+  run-linters: #Code analyse tool
     name: testing met linters
     permissions: write-all
     runs-on: ubuntu-latest
@@ -108,12 +89,10 @@ jobs:
         uses: wearerequired/lint-action@v2
           
 
-
   
   build:
     runs-on: ubuntu-latest
     needs: [test, run-linters]
-    #if: test.steps.unitTest.outputs.result_value == "Failed"
     steps:
       - uses: actions/checkout@v3
 
@@ -155,7 +134,7 @@ jobs:
       name: 'Development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ###mag alleen runnen vanuit test/development
+    if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ||  github.ref == 'refs/heads/proberen' #mag alleen runnen vanuit test/development/proberen
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -166,7 +145,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: 'B2C6Gamification-develop' 
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         
@@ -190,6 +169,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_DEVELOP }}
+          app-name: 'B2C6Gamification-production' 
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PRODUCTION }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
