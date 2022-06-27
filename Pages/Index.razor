@@ -1,5 +1,5 @@
 ﻿@page "/"
-@attribute [Authorize]
+
 
 <PageTitle>Index</PageTitle>
 
@@ -7,20 +7,5 @@
 
 Welcome to the home page.
 
-<AuthorizeView Roles="Student">
-    <Authorized Context="IsStudent">
-        <a>
-            Student
-        </a>
-    </Authorized>
-</AuthorizeView>
-
-<AuthorizeView Roles="Teacher">
-    <Authorized Context="IsTeacher">
-        <a>
-            Teacher
-        </a>
-    </Authorized>
-</AuthorizeView>
 
 @*<SurveyPrompt Title="How is Blazor working for you?" />*@

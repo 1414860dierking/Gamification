@@ -1,7 +1,77 @@
 ﻿@page "/Kennisbank"
-<h3>Kennisbank</h3>
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
+<h3>Quizzen</h3>
+
+<label for="Subjects">Kies een faculteit:</label>
+
+<select name="Faculty" id="Faculty.Id" @onchange="@OnSelectFaculty">
+    <option value="" disabled selected hidden>Kies faculteit...</option>
+    @foreach (Gamification.Models.Faculty faculty in ListOfFaculties)
+    {
+        <option value="@faculty.Id">@faculty.Name</option>
+    }
+</select>
+
+<label for="Subjects">Kies een vak:</label>
+
+<select name="Subjects" id="Subject.Id" @onchange="@OnSelectSubject">
+    <option value="" disabled selected hidden>Kies vak...</option>
+    @if (ListOfSubjects != null)
+    {
+        foreach (Gamification.Models.Subject subject in ListOfSubjects)
+        {
+            <option value="@subject.Id">@subject.Name</option>
+        }
+    }
+</select>
+
+<label for="Quizzes">Kies een quiz:</label>
+
+<select name="Quizzes" id="Quiz.Id" @onchange="@OnSelectQuiz">
+    <option value="" disabled selected hidden>Kies quiz...</option>
+    @if (ListOfQuizzes != null)
+    {
+        foreach (Gamification.Models.Quiz quiz in ListOfQuizzes)
+        {
+            <option value="@quiz.Id">@quiz.Name</option>
+        }
+    }
+    
+    
+</select>
+
+</div>
 
 
-@code {
-
+@if (KnowledgeBaseItems != null)
+{
+    if(KnowledgeBaseItems.Count() > 0)
+    {
+        foreach (Gamification.Models.KnowledgeBaseItem knowledgeBaseItem in KnowledgeBaseItems)
+        {
+        <h3>Kennisbankitems uitleg:</h3>
+                            
+        <h4>@knowledgeBaseItem.Title</h4>
+                           
+        <a>@knowledgeBaseItem.Description</a>
+                
+        @if (!String.IsNullOrEmpty(knowledgeBaseItem.ExternalLink))
+                {
+                    <a>Link: @knowledgeBaseItem.ExternalLink</a>
+                }
+        
+            <hr/>
+        }
+    }
+    else
+    {
+        <br/>
+        <a>Er is geen kennisbank uitleg bij deze quiz.</a>
+    }
+}
+else
+{
+    <br/>
+    <a>Selecteer een quiz a.u.b.</a>
 }

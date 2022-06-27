@@ -15,7 +15,7 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Quizzen">
+            <NavLink class="nav-link" href="SelectQuiz">
                 <span class="oi oi-plus" aria-hidden="true"></span> Quizzen
             </NavLink>
         </div>
@@ -24,7 +24,24 @@
                 <span class="oi oi-plus" aria-hidden="true"></span> Kennisbank
             </NavLink>
         </div>
-@*        <div class="nav-item px-3">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="chatpage">
+                <span class="oi oi-plus" aria-hidden="true"></span> Chatpage
+            </NavLink>
+        </div>
+
+        <AuthorizeView>
+    <Authorized>
+                <div class="nav-item px-3">
+            <NavLink class="nav-link" href="ManageQuiz">
+                <span class="oi oi-plus" aria-hidden="true"></span> Quizzen beheren
+            </NavLink>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+
+        @*        <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="oi oi-plus" aria-hidden="true"></span> Counter
             </NavLink>

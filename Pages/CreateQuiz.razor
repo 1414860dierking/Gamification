@@ -1,0 +1,193 @@
+﻿@page "/CreateQuiz"
+@inject IJSRuntime JS
+
+<h3>Quizen maken en of beheren.</h3>
+
+<div style="background-color:#f7f7f7; border:5px; border-color:black; padding:10px">
+
+<label for="Subjects">Kies een faculteit waarvoor u de quiz wilt maken:</label>
+
+<select name="Faculty" id="Faculty.Id" @onchange="@OnSelectFaculty">
+    <option value="" disabled selected hidden>Kies faculteit...</option>
+    @foreach (Gamification.Models.Faculty faculty in ListOfFaculties)
+    {
+        <option value="@faculty.Id">@faculty.Name</option>
+    }
+</select>
+
+<label for="Subjects">Kies een vak waarvoor u de quiz wilt maken:</label>
+
+<select name="Subjects" id="Subject.Id" @onchange="@OnSelectSubject">
+    <option value="" disabled selected hidden>Kies vak...</option>
+    @if (ListOfSubjects != null)
+    {
+        foreach (Gamification.Models.Subject subject in ListOfSubjects)
+        {
+            <option value="@subject.Id">@subject.Name</option>
+        }
+    }
+</select>
+</div>
+
+
+<div> 
+    <br />
+    <h3>Quiz informatie:</h3>
+    <input @bind="InputValueQuizName" placeholder="Naam van de quiz" style="width:100%;"/>
+    <br />
+    <textarea @bind="InputValueQuizDescription" placeholder="Omschrijving van de quiz" style="width:100%; height:150px;"/>
+    <br />
+    <a>Wilt u deze quiz als concept opslaan? Zo ja dan kan deze nog niet gespeeld of gezien worden.</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsConcept">
+    <br />
+    <a>Wilt u dat deze quiz door studenten individueel en online gespeeld kan worden?</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsOpenToFreePlay" >
+    <br />
+    <a>Wilt u dat de kennisbankitems van deze quiz worden getoond in de kennisbank?</a>
+    <br />
+    <a>Ja: </a><input type="checkbox" @bind="CheckboxIsOpenToKnowledgeBase">
+    <br />
+
+</div>
+
+<div>
+    <br />
+    <h3>Quiz vragen:</h3> 
+    <br />
+</div>
+
+
+@*vraag 1*@
+<div>
+    <h4>Vraag 1</h4>
+    <textarea @bind="Question1" placeholder="Vraag" style="width:100%"/>
+    <br />
+    <textarea @bind="QuestionDescription1" placeholder="Omschrijving van de vraag (optioneel)" style="width:100%"/>
+    <br />
+    <input @bind="QuestionTimeToAnswer1" placeholder="Tijd om de vraag te beantwoorden (optioneel en in seconden)" style="width:100%"/>
+    <br />
+    <br />
+    <a>Uitleg: Antwoordtypen zijn a,b,c,d of Waar/Onwaar, Links/Rechts. Bij de a,b,c,d optie kunnen langere antwoorden in de antwoordvalue geschreven worden.</a>
+    <br />
+    <input @bind="Answertype11" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue11" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+    <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox1RightAnswer1">
+    <br />
+    <input @bind="Answertype12" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue12" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox2RightAnswer1">
+    <br />
+    <input @bind="Answertype13" placeholder="Antwoordtype" style="width:20%"/>    
+    <input @bind="Antwoordvalue13" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox3RightAnswer1">
+    <br />
+    <input @bind="Answertype14" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue14" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox4RightAnswer1">
+    <br />
+    <br />
+
+@*    kennisbank gedeelte nog toevoegen
+*@
+
+</div>
+
+@*vraag 2*@
+<div>
+    <h4>Vraag 2</h4>
+    <textarea @bind="Question2" placeholder="Vraag" style="width:100%"/>
+    <br />
+    <textarea @bind="QuestionDescription2" placeholder="Omschrijving van de vraag (optioneel)" style="width:100%"/>
+    <br />
+    <input @bind="QuestionTimeToAnswer2" placeholder="Tijd om de vraag te beantwoorden (optioneel en in seconden)" style="width:100%"/>
+    <br />
+    <br />
+    <a>Uitleg: Antwoordtypen zijn a,b,c,d of Waar/Onwaar, Links/Rechts. Bij de a,b,c,d optie kunnen langere antwoorden in de antwoordvalue geschreven worden.</a>
+    <br />
+    <input @bind="Answertype21" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue21" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+    <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox1RightAnswer2">
+    <br />
+    <input @bind="Answertype22" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue22" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox2RightAnswer2">
+    <br />
+    <input @bind="Answertype23" placeholder="Antwoordtype" style="width:20%"/>    
+    <input @bind="Antwoordvalue23" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox3RightAnswer2">
+    <br />
+    <input @bind="Answertype24" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue24" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox4RightAnswer2">
+    <br />
+    <br />
+
+@*    kennisbank gedeelte nog toevoegen
+*@
+
+</div>
+
+@*vraag 3*@
+<div>
+    <h4>Vraag 3</h4>
+    <textarea @bind="Question3" placeholder="Vraag" style="width:100%"/>
+    <br />
+    <textarea @bind="QuestionDescription3" placeholder="Omschrijving van de vraag (optioneel)" style="width:100%"/>
+    <br />
+    <input @bind="QuestionTimeToAnswer3" placeholder="Tijd om de vraag te beantwoorden (optioneel en in seconden)" style="width:100%"/>
+    <br />
+    <br />
+    <a>Uitleg: Antwoordtypen zijn a,b,c,d of Waar/Onwaar, Links/Rechts. Bij de a,b,c,d optie kunnen langere antwoorden in de antwoordvalue geschreven worden.</a>
+    <br />
+    <input @bind="Answertype31" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue31" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+    <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox1RightAnswer3">
+    <br />
+    <input @bind="Answertype32" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue32" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox2RightAnswer3">
+    <br />
+    <input @bind="Answertype33" placeholder="Antwoordtype" style="width:20%"/>    
+    <input @bind="Antwoordvalue33" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox3RightAnswer3">
+    <br />
+    <input @bind="Answertype34" placeholder="Antwoordtype" style="width:20%"/>
+    <input @bind="Antwoordvalue34" placeholder="Antwoordvalue (optioneel)" style="width:79%"/>
+        <br />
+    <a>Is het juiste antwoord: </a><input type="checkbox" @bind="Checkbox4RightAnswer3">
+    <br />
+    <br />
+
+@*    kennisbank gedeelte nog toevoegen
+*@
+
+</div>
+
+
+
+<div>
+    <button class="btn btn-secondary" style="text-align:left; margin:0" > + 1 vraag </button>
+</div>
+
+<div>
+    <button class="btn btn-primary" style="float:right; text-align: right; margin:5px; display:block; margin:0; margin-bottom:5px" @onclick="@( _ => SaveQuiz() )"> Opslaan quiz </button>
+    <br />
+    <br />
+    <br />
+</div>
+
+
+

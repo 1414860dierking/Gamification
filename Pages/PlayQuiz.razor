@@ -1,0 +1,205 @@
+﻿@page "/PlayQuiz"
+
+<body style="padding:0px; margin:0; width:100%; height:100%">
+
+    @if (QuizActive)
+    {
+        @if (QuestionNumber > ListOfQuestions.Count())
+        {
+            <h2>Quiz @Quiz.Name</h2>
+            if (CorrectAnswerCount == 1)
+            {
+                <p>U heeft @CorrectAnswerCount vraag goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+            }
+            else
+            {
+                <p>U heeft @CorrectAnswerCount vragen goed beantwoord van de @ListOfQuestions.Count() vragen.</p>
+            }
+
+            <button @onclick="Home" class="btn btn-primary">Terug naar home</button>
+        }
+        else
+        {
+            @if (Quiz != null)
+            {
+
+                @if (AnswerMode)
+                {
+                    if (CorrectAnswer)
+                    {
+
+                        <div style="background-color:green; margin:0; padding:15px; width:100%; height:100%; display:block">
+                            <h2>Quiz @Quiz.Name</h2>
+
+                            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
+
+                            <h3>@CurrentQuestion.Title</h3>
+                            <p>@CurrentQuestion.Description</p>
+
+                            @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                            {
+                                if (answer == ChosenAnswer)
+                                {
+                                    <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                                    <a> &nbsp; @answer.AnswerValue</a>
+                                    <img src="images/check.png" alt="check" style="height:40px">
+                                    <br />
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                                    <a> &nbsp; @answer.AnswerValue</a>
+                                    <br />
+                                }
+                            }
+
+                            <br />
+                            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
+                            <br />
+
+                        </div>
+
+                        int knowledgeBaseCount = 0;
+                        foreach (Gamification.Models.KnowledgeBaseItem knowledgeBaseItem in KnowledgeBaseItems)
+                        {
+                            if (knowledgeBaseItem.QuestionsId == CurrentQuestion.Id && Quiz.OpenToKnowledgeBase)
+                            {
+                                <br />
+                                <h3>Kennisbankitems uitleg:</h3>
+
+                                <h4>@knowledgeBaseItem.Title</h4>
+
+                                <a>@knowledgeBaseItem.Description</a>
+                                <br />
+                                @if (!String.IsNullOrEmpty(knowledgeBaseItem.ExternalLink))
+                                {
+                                    <a>Link: @knowledgeBaseItem.ExternalLink</a>
+                                }
+
+                                knowledgeBaseCount++;
+                            }
+                        }
+                        if (knowledgeBaseCount == 0)
+                        {
+                            <br />
+                            <a>Er is geen kennisbank uitleg bij deze vraag.</a>
+                        }
+
+
+                    }
+                    else
+                    {
+                        <div style="background-color:red; margin:0; padding:15px; width:100%; height:100%; display:block">
+                            <h2>Quiz @Quiz.Name</h2>
+
+                            <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
+
+                            <h3>@CurrentQuestion.Title</h3>
+                            <p>@CurrentQuestion.Description</p>
+
+                            @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                            {
+                                if (answer == ChosenAnswer)
+                                {
+                                    <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                                    <a> &nbsp; @answer.AnswerValue </a>
+                                    <img src="images/cross.png" alt="cross" style="height:40px" />
+                                    <br />
+                                }
+                                else
+                                {
+                                    if (answer.CorrectAnswer)
+                                    {
+                                        <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                                        <a> &nbsp; @answer.AnswerValue </a>
+                                        <img src="images/check.png" alt="check" style="height:40px" />
+                                        <br />
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-info" style="pointer-events:none; margin:4px"> @answer.AnswerType</a>
+                                        <a> &nbsp; @answer.AnswerValue </a>
+                                        <br />
+                                    }
+                                }
+
+                            }
+
+                            <br />
+
+                            <button @onclick="LoadQuestion" class="btn btn-primary">Volgende vraag</button>
+                            <br />
+                        </div>
+
+                        int knowledgeBaseCount = 0;
+                        foreach (Gamification.Models.KnowledgeBaseItem knowledgeBaseItem in KnowledgeBaseItems)
+                        {
+                            if (knowledgeBaseItem.QuestionsId == CurrentQuestion.Id)
+                            {
+                                <br />
+                                <h3>Kennisbankitems uitleg:</h3>
+
+                                <h4>@knowledgeBaseItem.Title</h4>
+
+                                <a>@knowledgeBaseItem.Description</a>
+                                <br />
+                                @if (!String.IsNullOrEmpty(knowledgeBaseItem.ExternalLink))
+                                {
+                                    <a>Link: @knowledgeBaseItem.ExternalLink</a>
+                                }
+
+                                knowledgeBaseCount++;
+                            }
+                        }
+                        if (knowledgeBaseCount == 0)
+                        {
+                            <br />
+                            <a>Er is geen kennisbank uitleg bij deze vraag.</a>
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    <div style="margin:0; padding:15px; width:100%; height:100%; display:block">
+
+                        <h2>Quiz @Quiz.Name</h2>
+
+                        <p>Vraag @QuestionNumber van de @ListOfQuestions.Count()</p>
+
+                        <h3>@CurrentQuestion.Title</h3>
+                        <p>@CurrentQuestion.Description</p>
+
+                        @foreach (Gamification.Models.Answer answer in CurrentAnswers)
+                        {
+                            <Button style="margin:4px" class="btn btn-outline-info" @onclick="@( _ => ClickAnswer(answer) )"> @answer.AnswerType</Button>
+                            <a> &nbsp; @answer.AnswerValue </a>
+                            <br />
+                        }
+
+                    </div>
+                }
+
+            }
+        }
+    }
+
+    else
+    // if the quiz has not started yet this will show a starting screen
+    {
+        <div>
+
+            <h3>
+                Quiz naam: @Quiz.Name
+
+
+                <button class="btn btn-primary" style="float: right" @onclick="StartQuiz">Maak deze quiz</button>
+            </h3>
+
+
+            <h5>Omschrijving quiz: <br /> @Quiz.Description</h5>
+
+        </div>
+    }
+</body>
