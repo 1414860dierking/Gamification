@@ -137,7 +137,7 @@ jobs:
     if: github.ref == 'refs/heads/test' || github.ref == 'refs/heads/develop' ||  github.ref == 'refs/heads/proberen' #mag alleen runnen vanuit test/development/proberen
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: .net-app
 
@@ -161,7 +161,7 @@ jobs:
     if: github.ref == 'refs/heads/production' ###mag alleen runnen vanuit production
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: .net-app
 
